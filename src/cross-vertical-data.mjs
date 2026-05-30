@@ -62,6 +62,14 @@ export const VERTICALS = [
     canonical_buyer: "Pacific Region Federal Services Agency (PRFSA)",
     canonical_vendor: "VendorG GovDecide v3.x",
     canonical_decision_id: "PRFSA-DEC-2026-GOVTECH-0017"
+  },
+  {
+    code: "legaltech",
+    name: "LegalTech / AI in the Practice of Law",
+    federal_floor: "ABA Model Rules 1.1 Comment 8 + 1.6 + 1.6(c) + 1.7 + 1.9 + 3.3 + 5.3 + 5.5 + attorney-client privilege (common law) + work-product doctrine (Fed. R. Civ. P. 26(b)(3)) + state bar formal opinions (CA / NY / FL / DC / PA / TX / IL) + ABA Formal Op 512 + Mata v. Avianca-era federal court standing orders",
+    canonical_buyer: "Anchor & Reef LLP",
+    canonical_vendor: "VendorL MatterMind v4.x",
+    canonical_decision_id: "AR-DEC-2026-MATTER-0042"
   }
 ];
 
@@ -129,8 +137,16 @@ export const MATRIX = {
     "state-tracker":     { repo: "state-government-ai-disclosure-tracker", innovation: "Per-jurisdiction lifecycle ledger covering federal EOs + OMB memos + state government AI laws + local AI ordinances. Includes GovTech-unique `rescinded` lifecycle state (executive orders + memos uniquely susceptible). Tracks government's OWN AI use rules — distinct from prior 6 state trackers which cover regulator-side rules" },
     "compliance-bundle": { repo: "omb-m24-10-readiness-evidence-bundle",  innovation: "8 obligation families: ai-governance (OMB §2) + Federal AI Use Case Inventory (§3(a)) + rights-impacting minimum practices (§5(d)) + safety-impacting minimum practices (§5(c)) + OMB M-24-18 procurement + Section 508 accessibility + Privacy Act/FOIA + NIST AI RMF. Safety-impacting P30D monitoring cadence is shortest of any vertical (safety > everything)" },
     "bias-bundle":       { repo: "government-applicant-bias-coverage-lab", innovation: "Adds GovTech-unique Title VI Limited English Proficiency (LEP) subgroup dimension (no equivalent in private-sector verticals). Coverage statuses include `accessibility-pathway-impairment` (ADA Title II / Title VI LEP failure) + `agency-civil-rights-finding-pending` (federal agencies have OWN internal civil rights offices)" },
-    "incident-card":     { repo: "government-ai-incident-card-profile",   innovation: "18 event types — MOST EXTENSIVE Incident Card across all 7 verticals — because government AI has widest event-type surface area (multiple internal regulators + multiple external regulators + congressional oversight + state-AG overlay + Federal AI Use Case Inventory inaccuracy as distinct event). Includes GovTech-unique federal-ai-use-case-inventory-correction referral pathway" },
+    "incident-card":     { repo: "government-ai-incident-card-profile",   innovation: "18 event types — most extensive across the prior 7 verticals — because government AI has widest event-type surface area (multiple internal regulators + multiple external regulators + congressional oversight + state-AG overlay + Federal AI Use Case Inventory inaccuracy as distinct event). Includes GovTech-unique federal-ai-use-case-inventory-correction referral pathway" },
     "vault-contract":    { repo: "citizen-data-vault-contract-profile",    innovation: "15 categories + REQUIRED `ai_use_case_inventory_block` (OMB M-24-10 §3(a) inventory-publication requirement encoded into the Decision Card itself — NO other vertical has this). Protection levels include GovTech-unique `clearance-gated` (REQUIRES matching agent_clearance_level) + `tokenized-with-foia-exemption-tagging` + `tokenized-with-language-code-cleartext` (Title VI LEP routing). Retention envelope includes NARA records-management schedule + Privacy Act SORN URI + classification-declassification schedule" }
+  },
+  legaltech: {
+    "audit-stream":      { repo: "matter-decision-record-audit-stream", innovation: "FIRST Suite audit stream where `resource.privilege_tier` is REQUIRED on every event — 8-value taxonomy (privileged · work-product · joint-defense · common-interest · public-record · pre-litigation-investigative-privilege · tribunal-disclosure-required · opposing-party-quarantine). Three invariants: privilege-tier consistency on work-product-aware kinds + engagement-letter binding (ABA 1.7/1.9 conflict check) + citation-validation-before-production-ready (anti-Mata-v-Avianca). conflict_check block bound to engagement_letter_url (not generic procurement)." },
+    "state-tracker":     { repo: "state-bar-ai-disclosure-tracker", innovation: "Tracks ABA + state bar formal opinions (CA, NY-COSAC, FL, DC, PA, TX, IL) + federal court standing orders in the SAME field (`bar_jurisdiction` pattern accepts both `US-XX-BAR` and `SDNY` etc.). SDNY's Mata v. Avianca sanction is the historical anchor that motivates the citation-validation invariant on the sibling audit-stream. Lifecycle includes LegalTech-distinct `court-standing-order-issued` + `mandatory-cle-required` states." },
+    "compliance-bundle": { repo: "aba-rule-1-6-readiness-evidence-bundle", innovation: "8 obligation families × 35 required evidence kinds. Treats attorney-client privilege preservation + work-product doctrine preservation as TWO separate families (privilege has waiver mechanics confidentiality doesn't). LegalTech-distinctive: candor-toward-tribunal as its own family driven by post-Mata-v-Avianca state-bar opinions." },
+    "bias-bundle":       { repo: "legal-applicant-bias-coverage-lab", innovation: "Three LegalTech-unique subgroup taxonomies: indigent_defendant_status (Sixth Amendment / Gideon), immigration_status_disclosed, criminal_history_band. Two unique coverage statuses: compas-cautionary-pattern-detected (ProPublica 2016 two-sided asymmetry) + batson-pattern-detected (Batson v. Kentucky). Plus indigent-defendant-disparity-detected (Sixth Amendment effective assistance). Supervising-attorney review REQUIRED on four trigger categories — bias lab doesn't just measure, it gates." },
+    "incident-card":     { repo: "legal-ai-incident-card-profile", innovation: "18 event types incl. Mata-v-Avianca-class court-sanctioned-hallucination. 6-code privilege_waiver_risk_taxonomy (no other vertical Incident Card has anything analogous; encodes Fed. R. Evid. 502(d) clawback as a distinct rung). ed25519 signature REQUIRED (not optional, unlike sibling Incident Cards). LegalTech-unique referral pathways: outside ethics counsel, state bar disciplinary counsel, court disclosure, professional liability insurer, criminal-defense Sixth-Amendment effective-assistance." },
+    "vault-contract":    { repo: "attorney-client-data-vault-contract-profile", innovation: "Design centerpiece. 18 data categories × 8 privilege tiers (SAME 8 enum as the audit-stream's resource.privilege_tier — typed cross-repo binding). 4 LegalTech-unique runtime invariants: cross-matter-firewall, privilege-marker stamping, opposing-party-quarantine enforcement, no-training-data-use vendor contract clause REQUIRED. Two unique protection levels: tokenized-and-not-as-model-input-by-default-cross-matter + privilege-marker-required-on-every-disclosure." }
   }
 };
 
@@ -145,7 +161,8 @@ export const CROSS_CUTTING_INVARIANTS = [
       insurtech: "human_adjudicator_required (scoped to adverse-action-capable kinds AND recommendations: decline / rate-up / approve-with-conditions)",
       hrtech: "human_hiring_decision_required (scoped to adverse-action-capable kinds AND recommendations: decline / do-not-promote / performance-below / terminate-recommended)",
       fintech: "human_credit_officer_required (scoped to adverse-action-capable kinds AND recommendations: decline / approve-with-conditions / counter-offer / freeze / reduce-line)",
-      govtech: "human_agency_officer_required (scoped to adverse-action-capable kinds AND recommendations: deny / approve-with-conditions / withhold-fully / withhold-partially) + Federal AI Use Case Inventory entry required + classification-clearance enforcement (THREE orthogonal invariants — the FIRST Suite audit stream with three)"
+      govtech: "human_agency_officer_required (scoped to adverse-action-capable kinds AND recommendations: deny / approve-with-conditions / withhold-fully / withhold-partially) + Federal AI Use Case Inventory entry required + classification-clearance enforcement (THREE orthogonal invariants — the FIRST Suite audit stream with three)",
+      legaltech: "supervising_attorney_bar_id_required on every event + conflict_check.passed_at bound to engagement_letter_url (ABA 1.7/1.9) + citation-validation-before-production-ready (anti-Mata-v-Avianca) — THREE invariants with the supervising-attorney as named principal, not an abstract role"
     }
   },
   {
@@ -157,7 +174,8 @@ export const CROSS_CUTTING_INVARIANTS = [
       insurtech: "FCRA §615 + state DOI partial-claim-denial notice rules",
       hrtech: "Adverse employment action (rescinded offer + reasons reconciled against EEOC sample list)",
       fintech: "ECOA 12 CFR §1002.9 + FCRA §615 risk-based-pricing / adverse-action notice",
-      govtech: "Statutory appeals pathway (5 USC §555 + agency-specific appeal rules) + agency civil rights office referral + OMB notification on §5(d) impact-assessment trigger"
+      govtech: "Statutory appeals pathway (5 USC §555 + agency-specific appeal rules) + agency civil rights office referral + OMB notification on §5(d) impact-assessment trigger",
+      legaltech: "ABA Rule 1.4 client notification (always) + ABA Rule 3.3 tribunal disclosure (when AI output influenced filed material) + state bar disciplinary counsel notification (S3+) + criminal-defense Sixth-Amendment effective-assistance disclosure to defendant + appellate counsel"
     }
   },
   {
@@ -169,7 +187,8 @@ export const CROSS_CUTTING_INVARIANTS = [
       insurtech: "EEOC four-fifths-rule (where applicable) + actuarial-soundness defense framework",
       hrtech: "EEOC four-fifths-rule + UGESP §1607.5(D) 2-standard-deviation practical-significance test",
       fintech: "EEOC four-fifths-rule + business-necessity defense + redlining-pattern flagging",
-      govtech: "EEOC four-fifths-rule where applicable + Title VI Limited English Proficiency dimension (GovTech-unique) + OMB M-24-10 §5(d) rights-impacting impact-assessment trigger + accessibility-pathway-impairment + agency-civil-rights-finding-pending coverage statuses"
+      govtech: "EEOC four-fifths-rule where applicable + Title VI Limited English Proficiency dimension (GovTech-unique) + OMB M-24-10 §5(d) rights-impacting impact-assessment trigger + accessibility-pathway-impairment + agency-civil-rights-finding-pending coverage statuses",
+      legaltech: "Title VI + Sixth Amendment + Batson v. Kentucky + ABA Criminal Justice Standards. LegalTech-unique COMPAS-cautionary-pattern-detected (ProPublica 2016 two-sided asymmetry) + batson-pattern-detected + indigent-defendant-disparity-detected (Sixth Amendment effective-assistance at the AI tool ACCESS layer, not just output)"
     }
   },
   {
@@ -181,7 +200,8 @@ export const CROSS_CUTTING_INVARIANTS = [
       insurtech: "CO SB 21-169-named classes; default `tokenized-and-not-as-model-input-by-default`",
       hrtech: "EEOC + OFCCP segregation requirements; default `tokenized-and-not-as-model-input-by-default`",
       fintech: "ECOA Reg B protected classes + Section 1071 demographic data; default `tokenized-and-not-as-model-input-by-default` with firewall pathway",
-      govtech: "REQUIRED `ai_use_case_inventory_block` (OMB M-24-10 §3(a) encoded into Decision Card itself — no other vertical has this); classified-data + CUI clearance-gated; protected-class self-ID default NOT a model input; Privacy Act SORN URI + NARA records-management schedule required"
+      govtech: "REQUIRED `ai_use_case_inventory_block` (OMB M-24-10 §3(a) encoded into Decision Card itself — no other vertical has this); classified-data + CUI clearance-gated; protected-class self-ID default NOT a model input; Privacy Act SORN URI + NARA records-management schedule required",
+      legaltech: "8-value privilege_tier taxonomy as FIRST-CLASS field on every audit event (same enum cross-bound to the vault contract). 4 LegalTech-unique runtime invariants: cross-matter-firewall + privilege-marker stamping + opposing-party-quarantine enforcement + no-training-data-use vendor contract clause REQUIRED. Two unique protection levels: tokenized-and-not-as-model-input-by-default-cross-matter + privilege-marker-required-on-every-disclosure"
     }
   },
   {
@@ -193,7 +213,8 @@ export const CROSS_CUTTING_INVARIANTS = [
       insurtech: "State DOI + NAIC MCAS + CFPB (FCRA) + DOJ + state-AG pathways (6 pathways with evaluation-state tracking)",
       hrtech: "EEOC + state civil-rights agencies + NYC DCWP + OFCCP + DOJ + ADA-Rehab-Section-503-DOJ + state-AG (7 pathways)",
       fintech: "CFPB + primary federal supervisor (OCC/FRB/FDIC/NCUA) + state banking regulator + FinCEN + OFAC + CFPB OFL + DOJ + state-AG + FTC (9 pathways with institution-type-aware routing)",
-      govtech: "Agency Office of Civil Rights + OMB + OIG + GAO + DOJ Civil Rights + Section 508 OMB + congressional + state-AG + Federal AI Use Case Inventory correction (10 pathways — most extensive). 18 event types — most extensive Incident Card across all 7 verticals"
+      govtech: "Agency Office of Civil Rights + OMB + OIG + GAO + DOJ Civil Rights + Section 508 OMB + congressional + state-AG + Federal AI Use Case Inventory correction (10 pathways — most extensive across the prior 7 verticals). 18 event types — most extensive across the prior 7",
+      legaltech: "Outside ethics counsel + state bar disciplinary counsel + court disclosure (where AI reached a tribunal) + professional liability insurer + criminal-defense Sixth-Amendment effective-assistance to defendant+appellate counsel + DOJ Civil Rights + AI vendor incident-coordination + foreign-data-protection-authority. 10 pathways with REQUIRED ed25519 signature (LegalTech makes signature mandatory; sibling verticals leave it optional). 18 event types incl Mata-v-Avianca court-sanctioned-hallucination class."
     }
   }
 ];
