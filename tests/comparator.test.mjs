@@ -12,8 +12,8 @@ function check(name, condition, msg) {
 }
 
 // Matrix sanity: every vertical × every shape has a populated cell
-check("VERTICALS count = 6", VERTICALS.length === 6, `got ${VERTICALS.length}`);
-check("SHAPES count = 6",     SHAPES.length === 6,    `got ${SHAPES.length}`);
+check("VERTICALS count >= 7 (floor after GovTech)", VERTICALS.length >= 7, `got ${VERTICALS.length}`);
+check("SHAPES count = 6",                            SHAPES.length === 6,    `got ${SHAPES.length}`);
 
 for (const v of VERTICALS) {
   for (const s of SHAPES) {
@@ -38,7 +38,7 @@ check("renderMarkdown contains all shape names",    SHAPES.every((s) => md.inclu
 
 const json = JSON.parse(renderJson());
 check("renderJson parseable",                       typeof json === "object");
-check("renderJson.matrix has all 6 verticals",      Object.keys(json.matrix).length === 6);
+check("renderJson.matrix has matrix keys for all verticals", Object.keys(json.matrix).length === VERTICALS.length);
 
 // Compare-artifacts checks
 const fhirEvent = {event_id:"x","timestamp":"2026-01-01T00:00:00Z",kind:"fhir.observation.read",prev_hash:"0".repeat(64),hash:"a".repeat(64),regulatory_basis:{code:"hipaa-treatment-disclosure"}};

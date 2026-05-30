@@ -54,6 +54,14 @@ export const VERTICALS = [
     canonical_buyer: "Meridian Financial",
     canonical_vendor: "VendorF CreditMind v4.x",
     canonical_decision_id: "MERIDIAN-DEC-2026-FINTECH-0033"
+  },
+  {
+    code: "govtech",
+    name: "GovTech / Public Sector AI",
+    federal_floor: "OMB M-24-10 (Mar 2024) + OMB M-24-18 + AI Bill of Rights blueprint + Section 508 + Privacy Act of 1974 + FOIA + NIST AI RMF 1.0 + GenAI Profile + EO 14110 (rescinded by EO 14179) + FedRAMP + state government AI laws",
+    canonical_buyer: "Pacific Region Federal Services Agency (PRFSA)",
+    canonical_vendor: "VendorG GovDecide v3.x",
+    canonical_decision_id: "PRFSA-DEC-2026-GOVTECH-0017"
   }
 ];
 
@@ -115,6 +123,14 @@ export const MATRIX = {
     "bias-bundle":       { repo: "financial-applicant-bias-coverage-lab", innovation: "Adds `business-necessity-defended` AND `redlining-pattern-flagged` coverage statuses; Section 1071 minority/women/LGBTQI-owned business demographic dimensions" },
     "incident-card":     { repo: "financial-ai-incident-card-profile", innovation: "primary-federal-supervisor-notification regulator referral routing (OCC for national banks / FRB for member SHCs / FDIC for state non-member / NCUA for credit unions); fincen-sar-narrative-update; cfpb-fair-lending-referral" },
     "vault-contract":    { repo: "financial-customer-data-vault-contract-profile", innovation: "17 categories incl. alternative-data feeds (Plaid, MX, Yodlee, Klarna, Afterpay, Affirm, UltraFICO) under Section 1033; section-1033-data-portability-window in retention envelope; vendor-occ-frb-fdic-supervisory-readiness-attestation" }
+  },
+  govtech: {
+    "audit-stream":      { repo: "government-decision-record-audit-stream", innovation: "FIRST Suite audit stream with THREE orthogonal invariants: human-agency-officer-required + Federal AI Use Case Inventory entry required + classification-clearance (ordered UNCLASSIFIED<CUI<CONFIDENTIAL<SECRET<TOP-SECRET enforcement per E.O. 13526). Agency block with is_safety_impacting + is_rights_impacting flags drive OMB M-24-10 §5(c)/(d) minimum-practices triggers" },
+    "state-tracker":     { repo: "state-government-ai-disclosure-tracker", innovation: "Per-jurisdiction lifecycle ledger covering federal EOs + OMB memos + state government AI laws + local AI ordinances. Includes GovTech-unique `rescinded` lifecycle state (executive orders + memos uniquely susceptible). Tracks government's OWN AI use rules — distinct from prior 6 state trackers which cover regulator-side rules" },
+    "compliance-bundle": { repo: "omb-m24-10-readiness-evidence-bundle",  innovation: "8 obligation families: ai-governance (OMB §2) + Federal AI Use Case Inventory (§3(a)) + rights-impacting minimum practices (§5(d)) + safety-impacting minimum practices (§5(c)) + OMB M-24-18 procurement + Section 508 accessibility + Privacy Act/FOIA + NIST AI RMF. Safety-impacting P30D monitoring cadence is shortest of any vertical (safety > everything)" },
+    "bias-bundle":       { repo: "government-applicant-bias-coverage-lab", innovation: "Adds GovTech-unique Title VI Limited English Proficiency (LEP) subgroup dimension (no equivalent in private-sector verticals). Coverage statuses include `accessibility-pathway-impairment` (ADA Title II / Title VI LEP failure) + `agency-civil-rights-finding-pending` (federal agencies have OWN internal civil rights offices)" },
+    "incident-card":     { repo: "government-ai-incident-card-profile",   innovation: "18 event types — MOST EXTENSIVE Incident Card across all 7 verticals — because government AI has widest event-type surface area (multiple internal regulators + multiple external regulators + congressional oversight + state-AG overlay + Federal AI Use Case Inventory inaccuracy as distinct event). Includes GovTech-unique federal-ai-use-case-inventory-correction referral pathway" },
+    "vault-contract":    { repo: "citizen-data-vault-contract-profile",    innovation: "15 categories + REQUIRED `ai_use_case_inventory_block` (OMB M-24-10 §3(a) inventory-publication requirement encoded into the Decision Card itself — NO other vertical has this). Protection levels include GovTech-unique `clearance-gated` (REQUIRES matching agent_clearance_level) + `tokenized-with-foia-exemption-tagging` + `tokenized-with-language-code-cleartext` (Title VI LEP routing). Retention envelope includes NARA records-management schedule + Privacy Act SORN URI + classification-declassification schedule" }
   }
 };
 
@@ -128,7 +144,8 @@ export const CROSS_CUTTING_INVARIANTS = [
       proptech: "human_underwriter_required (universal on adverse-action events)",
       insurtech: "human_adjudicator_required (scoped to adverse-action-capable kinds AND recommendations: decline / rate-up / approve-with-conditions)",
       hrtech: "human_hiring_decision_required (scoped to adverse-action-capable kinds AND recommendations: decline / do-not-promote / performance-below / terminate-recommended)",
-      fintech: "human_credit_officer_required (scoped to adverse-action-capable kinds AND recommendations: decline / approve-with-conditions / counter-offer / freeze / reduce-line)"
+      fintech: "human_credit_officer_required (scoped to adverse-action-capable kinds AND recommendations: decline / approve-with-conditions / counter-offer / freeze / reduce-line)",
+      govtech: "human_agency_officer_required (scoped to adverse-action-capable kinds AND recommendations: deny / approve-with-conditions / withhold-fully / withhold-partially) + Federal AI Use Case Inventory entry required + classification-clearance enforcement (THREE orthogonal invariants — the FIRST Suite audit stream with three)"
     }
   },
   {
@@ -139,7 +156,8 @@ export const CROSS_CUTTING_INVARIANTS = [
       proptech: "ECOA 12 CFR §1002.9 30-day adverse-action notice + RESPA-specific overlays",
       insurtech: "FCRA §615 + state DOI partial-claim-denial notice rules",
       hrtech: "Adverse employment action (rescinded offer + reasons reconciled against EEOC sample list)",
-      fintech: "ECOA 12 CFR §1002.9 + FCRA §615 risk-based-pricing / adverse-action notice"
+      fintech: "ECOA 12 CFR §1002.9 + FCRA §615 risk-based-pricing / adverse-action notice",
+      govtech: "Statutory appeals pathway (5 USC §555 + agency-specific appeal rules) + agency civil rights office referral + OMB notification on §5(d) impact-assessment trigger"
     }
   },
   {
@@ -150,7 +168,8 @@ export const CROSS_CUTTING_INVARIANTS = [
       proptech: "EEOC four-fifths-rule (selection-rate ratio < 0.80) — canonical threshold",
       insurtech: "EEOC four-fifths-rule (where applicable) + actuarial-soundness defense framework",
       hrtech: "EEOC four-fifths-rule + UGESP §1607.5(D) 2-standard-deviation practical-significance test",
-      fintech: "EEOC four-fifths-rule + business-necessity defense + redlining-pattern flagging"
+      fintech: "EEOC four-fifths-rule + business-necessity defense + redlining-pattern flagging",
+      govtech: "EEOC four-fifths-rule where applicable + Title VI Limited English Proficiency dimension (GovTech-unique) + OMB M-24-10 §5(d) rights-impacting impact-assessment trigger + accessibility-pathway-impairment + agency-civil-rights-finding-pending coverage statuses"
     }
   },
   {
@@ -161,7 +180,8 @@ export const CROSS_CUTTING_INVARIANTS = [
       proptech: "ECOA + Fair Housing protected classes (RESPA + GLBA additional)",
       insurtech: "CO SB 21-169-named classes; default `tokenized-and-not-as-model-input-by-default`",
       hrtech: "EEOC + OFCCP segregation requirements; default `tokenized-and-not-as-model-input-by-default`",
-      fintech: "ECOA Reg B protected classes + Section 1071 demographic data; default `tokenized-and-not-as-model-input-by-default` with firewall pathway"
+      fintech: "ECOA Reg B protected classes + Section 1071 demographic data; default `tokenized-and-not-as-model-input-by-default` with firewall pathway",
+      govtech: "REQUIRED `ai_use_case_inventory_block` (OMB M-24-10 §3(a) encoded into Decision Card itself — no other vertical has this); classified-data + CUI clearance-gated; protected-class self-ID default NOT a model input; Privacy Act SORN URI + NARA records-management schedule required"
     }
   },
   {
@@ -172,7 +192,8 @@ export const CROSS_CUTTING_INVARIANTS = [
       proptech: "CFPB + DOJ Civil Rights + HUD + state DFPI/DFS/DSML pathways",
       insurtech: "State DOI + NAIC MCAS + CFPB (FCRA) + DOJ + state-AG pathways (6 pathways with evaluation-state tracking)",
       hrtech: "EEOC + state civil-rights agencies + NYC DCWP + OFCCP + DOJ + ADA-Rehab-Section-503-DOJ + state-AG (7 pathways)",
-      fintech: "CFPB + primary federal supervisor (OCC/FRB/FDIC/NCUA) + state banking regulator + FinCEN + OFAC + CFPB OFL + DOJ + state-AG + FTC (9 pathways with institution-type-aware routing)"
+      fintech: "CFPB + primary federal supervisor (OCC/FRB/FDIC/NCUA) + state banking regulator + FinCEN + OFAC + CFPB OFL + DOJ + state-AG + FTC (9 pathways with institution-type-aware routing)",
+      govtech: "Agency Office of Civil Rights + OMB + OIG + GAO + DOJ Civil Rights + Section 508 OMB + congressional + state-AG + Federal AI Use Case Inventory correction (10 pathways — most extensive). 18 event types — most extensive Incident Card across all 7 verticals"
     }
   }
 ];
