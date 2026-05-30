@@ -1,0 +1,45 @@
+{
+  "name": "kg-suite-vertical-comparator",
+  "version": "0.1.0",
+  "description": "Cross-vertical comparison tool for the Kinetic Gain Protocol Suite. Generates AEO-friendly Markdown + machine-readable JSON tables surfacing SAME shapes vs DIFFERENT per-vertical design contributions across the 6 vertical 6-packs (36 sibling spec repos). Also compares two artifacts side-by-side.",
+  "type": "module",
+  "bin": {
+    "kg-suite-compare": "bin/kg-suite-compare"
+  },
+  "main": "src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./data": "./src/cross-vertical-data.mjs",
+    "./report": "./src/generate-report.mjs",
+    "./compare": "./src/compare-artifacts.mjs"
+  },
+  "scripts": {
+    "test": "node tests/comparator.test.mjs",
+    "generate:md": "node src/cli.mjs > docs/CROSS-VERTICAL-COMPARISON.md",
+    "generate:json": "node src/cli.mjs --json > docs/comparison.json"
+  },
+  "files": [
+    "src/",
+    "bin/",
+    "docs/",
+    "examples/",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "kinetic-gain-protocol-suite",
+    "ai-governance",
+    "cross-vertical",
+    "comparator",
+    "decision-card",
+    "incident-card",
+    "evidence-bundle",
+    "regulated-vertical"
+  ],
+  "repository": "github:mizcausevic-dev/kg-suite-vertical-comparator",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
