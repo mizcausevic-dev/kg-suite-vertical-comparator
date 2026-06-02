@@ -1,6 +1,6 @@
 # kg-suite-vertical-comparator
 
-> **Kinetic Gain Protocol Suite Vertical Comparator v0.1.** Generates AEO-friendly Markdown + machine-readable JSON tables that surface SAME canonical shapes vs DIFFERENT per-vertical design contributions across the **6 vertical 6-packs** of the Kinetic Gain Protocol Suite (36 sibling spec repos). Also supports `kg-suite-compare artifact_a artifact_b` to compare two specific Suite artifacts side-by-side.
+> **Kinetic Gain Protocol Suite Vertical Comparator v0.1.** Generates AEO-friendly Markdown + machine-readable JSON tables that surface SAME canonical shapes vs DIFFERENT per-vertical design contributions across the **11 vertical 6-packs** of the Kinetic Gain Protocol Suite (66 sibling spec repos). Also supports `kg-suite-compare artifact_a artifact_b` to compare two specific Suite artifacts side-by-side.
 
 [![CI](https://github.com/mizcausevic-dev/kg-suite-vertical-comparator/actions/workflows/ci.yml/badge.svg)](https://github.com/mizcausevic-dev/kg-suite-vertical-comparator/actions/workflows/ci.yml)
 
@@ -108,7 +108,7 @@ CI regenerates `docs/CROSS-VERTICAL-COMPARISON.md` + `docs/comparison.json` on e
 | Repo | Role |
 | --- | --- |
 | [`kg-suite-vertical-router`](https://github.com/mizcausevic-dev/kg-suite-vertical-router) | Sibling tool: routes any artifact to the right vertical (this comparator describes which verticals exist + how they differ) |
-| All 36 sibling spec repos across the 6 vertical 6-packs | Data sources for the matrix |
+| All 66 sibling spec repos across the 11 vertical 6-packs | Data sources for the matrix |
 
 ## Compliance posture
 
